@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 
 namespace Calculator
 {
@@ -6,75 +7,112 @@ namespace Calculator
     {
         static void Main(string[] agrs)
         {
-            // Variables
-            string Name;
-            char Operator;
-            double num1;
-            double num2;
-            double answer;
-
             Console.ForegroundColor = ConsoleColor.Blue;
 
             Console.WriteLine("Enter your name before starting: ");
-            Name = Console.ReadLine();
+            string Name = Convert.ToString(Console.ReadLine());
 
             Console.WriteLine("Welcome to the Calculator, " + Name + "!");
 
-            bool exitProgram = false;
-
-            while (!exitProgram)
+            while (true)
             {
-                Console.WriteLine("Choose an operator...");
-                Console.WriteLine(
-                    "1. + (Addition)\n2. - (Subtraction)\n3. * (Multiplication)\n4. / (Division)\n5. Info\n0. Exit"
-                );
-                Operator = Convert.ToChar(Console.ReadLine());
+                Console.WriteLine("Choose a calculator type...");
+                Console.WriteLine("1. Two-number calculator\n2. Standard calculator\n0. Exit");
+                int choice = Convert.ToInt32(Console.ReadLine());
 
-                switch (Operator)
+                switch (choice)
                 {
-                    case '1':
-                        Console.WriteLine("Enter first number: ");
-                        num1 = Convert.ToDouble(Console.ReadLine());
-                        Console.WriteLine("Enter second number: ");
-                        num2 = Convert.ToDouble(Console.ReadLine());
-                        answer = num1 + num2;
-                        Console.WriteLine("\n\nAnswer is: " + answer + "\n\n");
+                    case 1:
+                        RunTwoNumberCalculator();
                         break;
-                    case '2':
-                        Console.WriteLine("Enter first number: ");
-                        num1 = Convert.ToDouble(Console.ReadLine());
-                        Console.WriteLine("Enter second number: ");
-                        num2 = Convert.ToDouble(Console.ReadLine());
-                        answer = num1 - num2;
-                        Console.WriteLine("\n\nAnswer is: " + answer + "\n\n");
+                    case 2:
+                        RunStandardCalculator();
                         break;
-                    case '3':
-                        Console.WriteLine("Enter first number: ");
-                        num1 = Convert.ToDouble(Console.ReadLine());
-                        Console.WriteLine("Enter second number: ");
-                        num2 = Convert.ToDouble(Console.ReadLine());
-                        answer = num1 * num2;
-                        Console.WriteLine("\n\nAnswer is: " + answer + "\n\n");
-                        break;
-                    case '4':
-                        Console.WriteLine("Enter first number: ");
-                        num1 = Convert.ToDouble(Console.ReadLine());
-                        Console.WriteLine("Enter second number: ");
-                        num2 = Convert.ToDouble(Console.ReadLine());
-                        answer = num1 / num2;
-                        Console.WriteLine("\n\nAnswer is: " + answer + "\n\n");
-                        break;
-                    case '0':
+                    case 0:
                         Console.WriteLine("Goodbye!");
-                        exitProgram = true;
-                        break;
-                    case '5':
-                        Console.WriteLine("Your name : " + Name);
-                        break;
+                        return;
                     default:
-                        Console.WriteLine("Wrong operator");
+                        Console.WriteLine("Invalid choice.");
                         break;
                 }
+            }
+        }
+
+        static void RunTwoNumberCalculator()
+        {
+            double num1,
+                num2,
+                answer;
+            char op;
+
+            Console.WriteLine("Two-number calculator");
+
+            Console.WriteLine("Enter first number: ");
+            num1 = Convert.ToDouble(Console.ReadLine());
+
+            Console.WriteLine("Enter operator (+,-,*,/): ");
+            op = Convert.ToChar(Console.ReadLine());
+
+            Console.WriteLine("Enter second number: ");
+            num2 = Convert.ToDouble(Console.ReadLine());
+
+            switch (op)
+            {
+                case '+':
+                    answer = num1 + num2;
+                    Console.WriteLine("Answer is: " + answer);
+                    break;
+                case '-':
+                    answer = num1 - num2;
+                    Console.WriteLine("Answer is: " + answer);
+                    break;
+                case '*':
+                    answer = num1 * num2;
+                    Console.WriteLine("Answer is: " + answer);
+                    break;
+                case '/':
+                    if (num2 == 0)
+                    {
+                        Console.WriteLine("Cannot divide by zero.");
+                    }
+                    else
+                    {
+                        answer = num1 / num2;
+                        Console.WriteLine("Answer is: " + answer);
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Invalid operator.");
+                    break;
+            }
+        }
+
+        static void RunStandardCalculator()
+        {
+            Console.WriteLine("Standard calculator");
+
+            Console.WriteLine("Enter your problem (e.g. 1+9*1): ");
+            string problem = Console.ReadLine();
+
+            // Remove all whitespace from the input string
+            problem = problem.Replace(" ", "");
+
+            // Define a table to evaluate arithmetic expressions
+            DataTable table = new DataTable();
+
+            try
+            {
+                // Evaluate the expression using the Compute method of the DataTable object
+                object result = table.Compute(problem, "");
+                Console.WriteLine("Answer is: " + result);
+            }
+            catch (SyntaxErrorException ex)
+            {
+                Console.WriteLine("Invalid syntax: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
             }
         }
     }
