@@ -73,7 +73,7 @@ namespace Calculator
                 case '/':
                     if (num2 == 0)
                     {
-                        Console.WriteLine("Cannot divide by zero.");
+                        Console.WriteLine("∞");
                     }
                     else
                     {
