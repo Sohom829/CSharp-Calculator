@@ -13,6 +13,8 @@ namespace Calculator
             double num2;
             double answer;
 
+            Console.ForegroundColor = ConsoleColor.Blue;
+
             Console.WriteLine("Enter your name before starting: ");
             Name = Console.ReadLine();
 
@@ -24,7 +26,7 @@ namespace Calculator
             {
                 Console.WriteLine("Choose an operator...");
                 Console.WriteLine(
-                    "1. + (Addition)\n2. - (Subtraction)\n3. * (Multiplication)\n4. / (Division)\n0. Exit"
+                    "1. + (Addition)\n2. - (Subtraction)\n3. * (Multiplication)\n4. / (Division)\n5. Info\n0. Exit"
                 );
                 Operator = Convert.ToChar(Console.ReadLine());
 
@@ -36,7 +38,7 @@ namespace Calculator
                         Console.WriteLine("Enter second number: ");
                         num2 = Convert.ToDouble(Console.ReadLine());
                         answer = num1 + num2;
-                        Console.WriteLine("Answer is: " + answer);
+                        Console.WriteLine("\n\nAnswer is: " + answer + "\n\n");
                         break;
                     case '2':
                         Console.WriteLine("Enter first number: ");
@@ -44,7 +46,7 @@ namespace Calculator
                         Console.WriteLine("Enter second number: ");
                         num2 = Convert.ToDouble(Console.ReadLine());
                         answer = num1 - num2;
-                        Console.WriteLine("Answer is: " + answer);
+                        Console.WriteLine("\n\nAnswer is: " + answer + "\n\n");
                         break;
                     case '3':
                         Console.WriteLine("Enter first number: ");
@@ -52,7 +54,7 @@ namespace Calculator
                         Console.WriteLine("Enter second number: ");
                         num2 = Convert.ToDouble(Console.ReadLine());
                         answer = num1 * num2;
-                        Console.WriteLine("Answer is: " + answer);
+                        Console.WriteLine("\n\nAnswer is: " + answer + "\n\n");
                         break;
                     case '4':
                         Console.WriteLine("Enter first number: ");
@@ -60,11 +62,14 @@ namespace Calculator
                         Console.WriteLine("Enter second number: ");
                         num2 = Convert.ToDouble(Console.ReadLine());
                         answer = num1 / num2;
-                        Console.WriteLine("Answer is: " + answer);
+                        Console.WriteLine("\n\nAnswer is: " + answer + "\n\n");
                         break;
                     case '0':
                         Console.WriteLine("Goodbye!");
                         exitProgram = true;
+                        break;
+                    case '5':
+                        Console.WriteLine("Your name : " + Name);
                         break;
                     default:
                         Console.WriteLine("Wrong operator");
