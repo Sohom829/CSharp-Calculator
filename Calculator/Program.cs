@@ -10,14 +10,16 @@ namespace Calculator
             Console.ForegroundColor = ConsoleColor.Blue;
 
             Console.WriteLine("Enter your name before starting: ");
-            string Name = Convert.ToString(Console.ReadLine());
+            string? Name = Convert.ToString(Console.ReadLine());
 
             Console.WriteLine("Welcome to the Calculator, " + Name + "!");
 
             while (true)
             {
                 Console.WriteLine("Choose a calculator type...");
-                Console.WriteLine("1. Two-number calculator\n2. Standard calculator\n0. Exit");
+                Console.WriteLine(
+                    "1. Two-number calculator\n2. Standard calculator\n3. Help\n0. Exit"
+                );
                 int choice = Convert.ToInt32(Console.ReadLine());
 
                 switch (choice)
@@ -51,7 +53,7 @@ namespace Calculator
             num1 = Convert.ToDouble(Console.ReadLine());
 
             Console.WriteLine("Enter operator (+,-,*,/): ");
-            op = Convert.ToChar(Console.ReadLine());
+            op = Console.ReadLine()?.FirstOrDefault() ?? '\0';
 
             Console.WriteLine("Enter second number: ");
             num2 = Convert.ToDouble(Console.ReadLine());
@@ -92,27 +94,34 @@ namespace Calculator
             Console.WriteLine("Standard calculator");
 
             Console.WriteLine("Enter your problem (e.g. 1+9*1): ");
-            string problem = Console.ReadLine();
+            string? problem = Console.ReadLine();
 
-            // Remove all whitespace from the input string
-            problem = problem.Replace(" ", "");
-
-            // Define a table to evaluate arithmetic expressions
-            DataTable table = new DataTable();
-
-            try
+            if (problem != null)
             {
-                // Evaluate the expression using the Compute method of the DataTable object
-                object result = table.Compute(problem, "");
-                Console.WriteLine("Answer is: " + result);
+                // Remove all whitespace from the input string
+                problem = problem.Replace(" ", "");
+
+                // Define a table to evaluate arithmetic expressions
+                DataTable table = new DataTable();
+
+                try
+                {
+                    // Evaluate the expression using the Compute method of the DataTable object
+                    object result = table.Compute(problem, "");
+                    Console.WriteLine("Answer is: " + result);
+                }
+                catch (SyntaxErrorException ex)
+                {
+                    Console.WriteLine("Invalid syntax: " + ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
             }
-            catch (SyntaxErrorException ex)
+            else
             {
-                Console.WriteLine("Invalid syntax: " + ex.Message);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error: " + ex.Message);
+                Console.WriteLine("Input string was null.");
             }
         }
     }
