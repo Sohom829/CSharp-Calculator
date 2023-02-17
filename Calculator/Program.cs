@@ -13,13 +13,15 @@ namespace Calculator
             double num2;
             double answer;
 
+            Console.WriteLine("Enter your name before starting: ");
+            Name = Console.ReadLine();
+
+            Console.WriteLine("Welcome to the Calculator, " + Name + "!");
+
             bool exitProgram = false;
 
             while (!exitProgram)
             {
-                Console.WriteLine("Enter your name before starting: ");
-                Name = Convert.ToString(Console.ReadLine());
-                Console.WriteLine("Welcome to the Calculator, " + Name + "!");
                 Console.WriteLine("Choose an operator...");
                 Console.WriteLine(
                     "1. + (Addition)\n2. - (Subtraction)\n3. * (Multiplication)\n4. / (Division)\n0. Exit"
